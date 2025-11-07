@@ -1,0 +1,168 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Admin User",
+      "email": "admin@construction.com"
+    },
+    {
+      "id": 2,
+      "username": "agent1",
+      "password": "agent123",
+      "role": "site_agent",
+      "name": "Site Agent",
+      "email": "agent@construction.com"
+    },
+    {
+      "id": 3,
+      "username": "client1",
+      "password": "client123",
+      "role": "client",
+      "name": "John Client",
+      "email": "client@example.com"
+    }
+  ],
+  "works": [
+    {
+      "id": 1,
+      "title": "Foundation Work",
+      "description": "Concrete foundation for Building A",
+      "clientId": 3,
+      "status": "in_progress",
+      "startDate": "2024-01-15",
+      "endDate": "2024-02-15",
+      "estimatedValue": 50000,
+      "actualValue": 0,
+      "createdBy": 1,
+      "createdAt": "2024-01-10T10:00:00Z"
+    }
+  ],
+  "siteVisits": [
+    {
+      "id": 1,
+      "workId": 1,
+      "visitDate": "2024-01-16",
+      "inspector": "Site Agent",
+      "qcChecklist": {
+        "materialQuality": true,
+        "safetyCompliance": true,
+        "workmanship": false,
+        "timelineAdherence": true
+      },
+      "photos": [
+        "photo1.jpg",
+        "photo2.jpg"
+      ],
+      "notes": "Minor workmanship issues noted",
+      "createdAt": "2024-01-16T14:30:00Z"
+    }
+  ],
+  "equipment": [
+    {
+      "id": 1,
+      "name": "Excavator CAT 320",
+      "type": "heavy_machinery",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 500
+    },
+    {
+      "id": 2,
+      "name": "Concrete Mixer",
+      "type": "machinery",
+      "status": "assigned",
+      "assignedTo": "Mason Team A",
+      "workId": 1,
+      "dailyRate": 200
+    }
+  ],
+  "labourLogs": [
+    {
+      "id": 1,
+      "workId": 1,
+      "date": "2024-01-16",
+      "workers": [
+        {
+          "name": "John Mason",
+          "role": "mason",
+          "hoursWorked": 8,
+          "hourlyRate": 25
+        },
+        {
+          "name": "Mike Helper",
+          "role": "casual",
+          "hoursWorked": 8,
+          "hourlyRate": 15
+        }
+      ],
+      "totalCost": 320,
+      "createdAt": "2024-01-16T18:00:00Z"
+    }
+  ],
+  "finances": [
+    {
+      "id": 1,
+      "workId": 1,
+      "type": "expense",
+      "category": "labour",
+      "amount": 320,
+      "description": "Daily labour cost - Jan 16",
+      "date": "2024-01-16",
+      "createdAt": "2024-01-16T18:00:00Z"
+    },
+    {
+      "id": 2,
+      "workId": 1,
+      "type": "expense",
+      "category": "equipment",
+      "amount": 200,
+      "description": "Concrete mixer rental - Jan 16",
+      "date": "2024-01-16",
+      "createdAt": "2024-01-16T18:00:00Z"
+    }
+  ],
+  "timeline": [
+    {
+      "id": 1,
+      "workId": 1,
+      "event": "Work Started",
+      "description": "Foundation work commenced",
+      "date": "2024-01-15",
+      "createdBy": 1,
+      "createdAt": "2024-01-15T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "workId": 1,
+      "event": "Site Visit",
+      "description": "QC inspection completed",
+      "date": "2024-01-16",
+      "createdBy": 2,
+      "createdAt": "2024-01-16T14:30:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 3,
+      "workId": 1,
+      "title": "Work Started",
+      "message": "Foundation Work has been started",
+      "read": true,
+      "createdAt": "2024-01-15T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "workId": 1,
+      "title": "Site Visit Completed",
+      "message": "QC inspection completed for Foundation Work",
+      "read": true,
+      "createdAt": "2024-01-16T14:30:00Z"
+    }
+  ]
+}
