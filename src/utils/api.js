@@ -15,4 +15,12 @@ export const api = {
     body: JSON.stringify(work)
   }).then(r => r.json()),
 
+  // Site Visits
+  getSiteVisits: () => fetch(`${API_BASE}/siteVisits?_expand=work`).then(r => r.json()),
+  createSiteVisit: (visit) => fetch(`${API_BASE}/siteVisits`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(visit)
+  }).then(r => r.json()),
+
 }
