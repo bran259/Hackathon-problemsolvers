@@ -4,6 +4,12 @@ import { api } from '../utils/api';
 const Equipment = () => {
   const [equipment, setEquipment] = useState([]);
   const [works, setWorks] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    type: '',
+    dailyRate: ''
+  });
 
   useEffect(() => {
     fetchEquipment();
@@ -41,6 +47,37 @@ const Equipment = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await api.createEquipment({
+        ...formData,
+        dailyRate: parseFloat(formData.dailyRate),
+        status: 'available',
+        assignedTo: null,
+        workId: null
+      });
+      setFormData({ name: '', type: '', dailyRate: '' });
+      setShowForm(false);
+      fetchEquipment();
+    } catch (error) {
+      console.error('Failed to create equipment:', error);
+    }
+  };
+
+  const handleDelete = async (equipmentId) => {
+    if (window.confirm('Are you sure you want to delete this equipment?')) {
+      try {
+        await api.deleteEquipment(equipmentId);
+        fetchEquipment();
+      } catch (error) {
+        console.error('Failed to delete equipment:', error);
+      }
+    }
+  };
+
+  const equipmentTypes = ['heavy_machinery', 'machinery', 'transport', 'tools'];
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -54,8 +91,77 @@ const Equipment = () => {
               {equipment.filter(e => e.status === 'assigned').length} Assigned
             </span>
           </div>
+          <button 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+            onClick={() => setShowForm(true)}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>Add Equipment</span>
+          </button>
         </div>
       </div>
+
+      {showForm && (
+        <div className="bg-white rounded-lg shadow-md mb-6">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800">Add New Equipment</h2>
+          </div>
+          <div className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Equipment Name</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    placeholder="Enter equipment name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                  <select
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.type}
+                    onChange={(e) => setFormData({...formData, type: e.target.value})}
+                    required
+                  >
+                    <option value="">Select Type</option>
+                    {equipmentTypes.map(type => (
+                      <option key={type} value={type}>{type.replace('_', ' ')}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Daily Rate ($)</label>
+                  <input
+                    type="number"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={formData.dailyRate}
+                    onChange={(e) => setFormData({...formData, dailyRate: e.target.value})}
+                    placeholder="0.00"
+                    min="0"
+                    step="0.01"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-4">
+                <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200">
+                  Add Equipment
+                </button>
+                <button type="button" className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors duration-200" onClick={() => setShowForm(false)}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-lg shadow-md">
         <div className="px-6 py-4 border-b border-gray-200">
@@ -129,28 +235,37 @@ const Equipment = () => {
                       ${item.dailyRate}/day
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {item.status === 'available' ? (
-                        <select
-                          className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          onChange={(e) => {
-                            const workId = parseInt(e.target.value);
-                            const work = works.find(w => w.id === workId);
-                            handleAssignment(item.id, workId, `Team for ${work?.title}`);
-                          }}
-                        >
-                          <option value="">Assign to Work</option>
-                          {works.map(work => (
-                            <option key={work.id} value={work.id}>{work.title}</option>
-                          ))}
-                        </select>
-                      ) : (
+                      <div className="flex space-x-2">
+                        {item.status === 'available' ? (
+                          <select
+                            className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            onChange={(e) => {
+                              const workId = parseInt(e.target.value);
+                              const work = works.find(w => w.id === workId);
+                              handleAssignment(item.id, workId, `Team for ${work?.title}`);
+                            }}
+                          >
+                            <option value="">Assign to Work</option>
+                            {works.map(work => (
+                              <option key={work.id} value={work.id}>{work.title}</option>
+                            ))}
+                          </select>
+                        ) : (
+                          <button
+                            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md text-sm transition-colors duration-200"
+                            onClick={() => handleAssignment(item.id, null, null)}
+                          >
+                            Release
+                          </button>
+                        )}
                         <button
-                          className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md text-sm transition-colors duration-200"
-                          onClick={() => handleAssignment(item.id, null, null)}
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm transition-colors duration-200"
+                          onClick={() => handleDelete(item.id)}
+                          disabled={item.status === 'assigned'}
                         >
-                          Release
+                          Delete
                         </button>
-                      )}
+                      </div>
                     </td>
                   </tr>
                 ))}
