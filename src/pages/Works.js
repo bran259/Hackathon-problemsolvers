@@ -55,25 +55,27 @@ const Works = () => {
         createdAt: new Date().toISOString()
       };
 
-      await api.createWork(work);
+      const createdWork = await api.createWork(work);
       
-      // Create timeline event
-      await api.createTimelineEvent({
-        workId: work.id,
-        event: 'Work Created',
-        description: `${work.title} has been created`,
-        date: work.startDate,
-        createdBy: user.id,
-        createdAt: new Date().toISOString()
-      });
+      // Create timeline event (only if work was created successfully)
+      if (createdWork && createdWork.id) {
+        await api.createTimelineEvent({
+          workId: createdWork.id,
+          event: 'Work Created',
+          description: `${createdWork.title} has been created`,
+          date: createdWork.startDate,
+          createdBy: user.id,
+          createdAt: new Date().toISOString()
+        });
 
-      // Notify client
-      await createNotification(
-        work.clientId,
-        work.id,
-        'New Work Created',
-        `A new work "${work.title}" has been created for you`
-      );
+        // Notify client
+        await createNotification(
+          createdWork.clientId,
+          createdWork.id,
+          'New Work Created',
+          `A new work "${createdWork.title}" has been created for you`
+        );
+      }
 
       setFormData({
         title: '',

@@ -1,4 +1,4 @@
-
+// Simple API test script
 const testAPI = async () => {
   const baseURL = 'http://localhost:3001';
   

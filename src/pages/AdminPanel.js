@@ -197,6 +197,41 @@ const AdminPanel = () => {
                 >
                   Cancel
                 </button>
+                <button 
+                  type="button" 
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+                  onClick={() => {
+                    setUserForm({
+                      username: '',
+                      password: '',
+                      name: '',
+                      email: '',
+                      role: 'client'
+                    });
+                    setEditingUser(null);
+                  }}
+                >
+                  Quick Add Client
+                </button>
+              </div>
+
+              <div className="flex space-x-4">
+                <button 
+                  type="submit" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+                >
+                  {editingUser ? 'Update User' : 'Create User'}
+                </button>
+                <button 
+                  type="button" 
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+                  onClick={() => {
+                    setShowUserForm(false);
+                    setEditingUser(null);
+                  }}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>

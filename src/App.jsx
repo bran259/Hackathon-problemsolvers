@@ -1,16 +1,46 @@
-import { useState } from 'react'
-import './App.css'
-import React from "react"
-
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './hooks/useAuth'
+import { NotificationProvider } from './hooks/useNotifications'
+import Layout from './components/Layout'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import Works from './pages/Works'
+import SiteVisits from './pages/SiteVisits'
+import Equipment from './pages/Equipment'
+import Labour from './pages/Labour'
+import Finances from './pages/Finances'
+import AdminPanel from './pages/AdminPanel'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
-    <>
-      <p className="read-the-docs text-5xl">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AuthProvider>
+      <NotificationProvider>
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+                <Route index element={<Navigate to="/dashboard" replace />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="works" element={<Works />} />
+                <Route path="site-visits" element={<SiteVisits />} />
+                <Route path="equipment" element={<Equipment />} />
+                <Route path="labour" element={<Labour />} />
+                <Route path="finances" element={<Finances />} />
+                <Route path="admin" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminPanel />
+                  </ProtectedRoute>
+                } />
+              </Route>
+            </Routes>
+          </div>
+        </Router>
+      </NotificationProvider>
+    </AuthProvider>
+  );
 }
 
 export default App

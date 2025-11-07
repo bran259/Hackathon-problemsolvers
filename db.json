@@ -23,6 +23,14 @@
       "role": "client",
       "name": "John Client",
       "email": "client@example.com"
+    },
+    {
+      "username": "Dan",
+      "password": "dan",
+      "name": "Daniel",
+      "email": "daniel@mail.com",
+      "role": "client",
+      "id": 1762520078930
     }
   ],
   "works": [
@@ -35,9 +43,74 @@
       "startDate": "2024-01-15",
       "endDate": "2024-02-15",
       "estimatedValue": 50000,
-      "actualValue": 0,
+      "actualValue": 40000,
       "createdBy": 1,
       "createdAt": "2024-01-10T10:00:00Z"
+    },
+    {
+      "title": "Foundation works",
+      "description": "Excavate trenches and set columns",
+      "clientId": 3,
+      "estimatedValue": 200000,
+      "startDate": "2025-02-10",
+      "endDate": "2025-10-12",
+      "actualValue": 80000,
+      "status": "in_progress",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:28:07.638Z",
+      "id": 2
+    },
+    {
+      "title": "Foundation",
+      "description": "Excavation",
+      "clientId": 3,
+      "estimatedValue": 200000,
+      "startDate": "2025-12-12",
+      "endDate": "2026-12-01",
+      "actualValue": 75000,
+      "status": "in_progress",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:28:49.825Z",
+      "id": 3
+    },
+    {
+      "title": "Beams construction",
+      "description": "Formwork to beams",
+      "clientId": 3,
+      "estimatedValue": 244,
+      "startDate": "2024-02-12",
+      "endDate": "2026-01-04",
+      "actualValue": 100,
+      "status": "in_progress",
+      "createdBy": 2,
+      "createdAt": "2025-11-07T12:34:45.583Z",
+      "id": 4
+    },
+    {
+      "title": "Column",
+      "description": "Formwork to columns",
+      "clientId": 3,
+      "estimatedValue": 260,
+      "startDate": "2025-01-05",
+      "endDate": "2025-05-06",
+      "actualValue": 150,
+      "status": "in_progress",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:37:03.991Z",
+      "id": 5
+    },
+    {
+      "title": "Roofing",
+      "description": "Make trusses and purlins",
+      "clientId": 3,
+      "estimatedValue": 467,
+      "startDate": "2025-12-12",
+      "endDate": "2026-02-02",
+      "actualValue": 0,
+      "status": "in_progress",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:53:49.482Z",
+      "id": 6
     }
   ],
   "siteVisits": [
@@ -65,9 +138,9 @@
       "id": 1,
       "name": "Excavator CAT 320",
       "type": "heavy_machinery",
-      "status": "available",
-      "assignedTo": null,
-      "workId": null,
+      "status": "assigned",
+      "assignedTo": "Team for Beams construction",
+      "workId": 4,
       "dailyRate": 500
     },
     {
@@ -78,6 +151,60 @@
       "assignedTo": "Mason Team A",
       "workId": 1,
       "dailyRate": 200
+    },
+    {
+      "id": 3,
+      "name": "Tower Crane",
+      "type": "heavy_machinery",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 800
+    },
+    {
+      "id": 4,
+      "name": "Bulldozer D6T",
+      "type": "heavy_machinery",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 600
+    },
+    {
+      "id": 5,
+      "name": "Dump Truck",
+      "type": "transport",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 300
+    },
+    {
+      "id": 6,
+      "name": "Compactor",
+      "type": "machinery",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 250
+    },
+    {
+      "id": 7,
+      "name": "Forklift",
+      "type": "machinery",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 150
+    },
+    {
+      "id": 8,
+      "name": "Welding Machine",
+      "type": "tools",
+      "status": "available",
+      "assignedTo": null,
+      "workId": null,
+      "dailyRate": 75
     }
   ],
   "labourLogs": [
@@ -123,6 +250,76 @@
       "description": "Concrete mixer rental - Jan 16",
       "date": "2024-01-16",
       "createdAt": "2024-01-16T18:00:00Z"
+    },
+    {
+      "id": 3,
+      "workId": 1,
+      "type": "income",
+      "category": "payment",
+      "amount": 15000,
+      "description": "Initial payment from client",
+      "date": "2024-01-15",
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "workId": 4,
+      "type": "income",
+      "category": "payment",
+      "amount": 100,
+      "description": "Advance payment",
+      "date": "2024-02-12",
+      "createdAt": "2024-02-12T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "workId": 4,
+      "type": "expense",
+      "category": "equipment",
+      "amount": 500,
+      "description": "Excavator rental",
+      "date": "2024-02-13",
+      "createdAt": "2024-02-13T14:00:00Z"
+    },
+    {
+      "id": 6,
+      "workId": 1,
+      "type": "income",
+      "category": "payment",
+      "amount": 25000,
+      "description": "Progress payment - 50% completion",
+      "date": "2024-01-30",
+      "createdAt": "2024-01-30T11:00:00Z"
+    },
+    {
+      "id": 7,
+      "workId": 2,
+      "type": "income",
+      "category": "payment",
+      "amount": 80000,
+      "description": "Initial contract payment",
+      "date": "2025-02-10",
+      "createdAt": "2025-02-10T10:00:00Z"
+    },
+    {
+      "id": 8,
+      "workId": 3,
+      "type": "income",
+      "category": "payment",
+      "amount": 75000,
+      "description": "Contract advance payment",
+      "date": "2025-12-12",
+      "createdAt": "2025-12-12T09:00:00Z"
+    },
+    {
+      "id": 9,
+      "workId": 5,
+      "type": "income",
+      "category": "payment",
+      "amount": 150,
+      "description": "Partial payment",
+      "date": "2025-01-05",
+      "createdAt": "2025-01-05T14:00:00Z"
     }
   ],
   "timeline": [
@@ -143,6 +340,76 @@
       "date": "2024-01-16",
       "createdBy": 2,
       "createdAt": "2024-01-16T14:30:00Z"
+    },
+    {
+      "event": "Work Created",
+      "description": "Foundation works has been created",
+      "date": "2025-02-10",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:28:07.674Z",
+      "id": 3
+    },
+    {
+      "event": "Work Created",
+      "description": "Foundation has been created",
+      "date": "2025-12-12",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:28:49.857Z",
+      "id": 4
+    },
+    {
+      "workId": 4,
+      "event": "Work Created",
+      "description": "Beams construction has been created",
+      "date": "2024-02-12",
+      "createdBy": 2,
+      "createdAt": "2025-11-07T12:34:45.617Z",
+      "id": 5
+    },
+    {
+      "workId": 5,
+      "event": "Work Created",
+      "description": "Column has been created",
+      "date": "2025-01-05",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:37:04.019Z",
+      "id": 6
+    },
+    {
+      "workId": 1,
+      "event": "Payment Received",
+      "description": "Initial payment of $15,000 received",
+      "date": "2024-01-15",
+      "createdBy": 3,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "id": 7
+    },
+    {
+      "workId": 1,
+      "event": "Progress Payment",
+      "description": "Progress payment of $25,000 received",
+      "date": "2024-01-30",
+      "createdBy": 3,
+      "createdAt": "2024-01-30T11:00:00Z",
+      "id": 8
+    },
+    {
+      "workId": 2,
+      "event": "Contract Payment",
+      "description": "Initial contract payment of $80,000 received",
+      "date": "2025-02-10",
+      "createdBy": 3,
+      "createdAt": "2025-02-10T10:00:00Z",
+      "id": 9
+    },
+    {
+      "workId": 6,
+      "event": "Work Created",
+      "description": "Roofing has been created",
+      "date": "2025-12-12",
+      "createdBy": 1,
+      "createdAt": "2025-11-07T12:53:49.523Z",
+      "id": 10
     }
   ],
   "notifications": [
@@ -163,6 +430,67 @@
       "message": "QC inspection completed for Foundation Work",
       "read": true,
       "createdAt": "2024-01-16T14:30:00Z"
+    },
+    {
+      "userId": 3,
+      "title": "New Work Created",
+      "message": "A new work \"Foundation works\" has been created for you",
+      "read": true,
+      "createdAt": "2025-11-07T12:28:07.712Z",
+      "id": 3
+    },
+    {
+      "userId": 3,
+      "title": "New Work Created",
+      "message": "A new work \"Foundation\" has been created for you",
+      "read": true,
+      "createdAt": "2025-11-07T12:28:49.892Z",
+      "id": 4
+    },
+    {
+      "userId": 3,
+      "workId": 4,
+      "title": "New Work Created",
+      "message": "A new work \"Beams construction\" has been created for you",
+      "read": true,
+      "createdAt": "2025-11-07T12:34:45.647Z",
+      "id": 5
+    },
+    {
+      "userId": 3,
+      "workId": 5,
+      "title": "New Work Created",
+      "message": "A new work \"Column\" has been created for you",
+      "read": false,
+      "createdAt": "2025-11-07T12:37:04.050Z",
+      "id": 6
+    },
+    {
+      "userId": 3,
+      "workId": 1,
+      "title": "Payment Received",
+      "message": "Initial payment of $15,000 received for Foundation Work",
+      "read": false,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "id": 7
+    },
+    {
+      "userId": 3,
+      "workId": 1,
+      "title": "Progress Payment Received",
+      "message": "Progress payment of $25,000 received for Foundation Work",
+      "read": false,
+      "createdAt": "2024-01-30T11:00:00Z",
+      "id": 8
+    },
+    {
+      "userId": 3,
+      "workId": 6,
+      "title": "New Work Created",
+      "message": "A new work \"Roofing\" has been created for you",
+      "read": false,
+      "createdAt": "2025-11-07T12:53:49.552Z",
+      "id": 9
     }
   ]
 }
