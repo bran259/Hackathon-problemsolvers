@@ -45,12 +45,16 @@ const Finances = () => {
         .filter(f => f.type === 'income')
         .reduce((sum, f) => sum + f.amount, 0);
       
+      const profit = totalIncome - totalExpenses;
+      const profitMargin = totalIncome > 0 ? (profit / totalIncome) * 100 : 0;
+      
       reconciliationData[work.id] = {
         workTitle: work.title,
         estimatedValue: work.estimatedValue,
         totalExpenses,
         totalIncome,
-        netPosition: totalIncome - totalExpenses,
+        profit,
+        profitMargin,
         variance: work.estimatedValue - totalExpenses,
         completionPercentage: (totalExpenses / work.estimatedValue) * 100
       };
@@ -81,7 +85,7 @@ const Finances = () => {
       <h1 className="text-3xl font-bold text-gray-800">Financial Management</h1>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
           <div className="flex items-center">
             <div>
@@ -112,6 +116,24 @@ const Finances = () => {
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                 <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+          <div className="flex items-center">
+            <div>
+              <p className="text-2xl font-bold text-gray-800">
+                ${Object.values(reconciliation).reduce((sum, r) => sum + r.profit, 0).toLocaleString()}
+              </p>
+              <p className="text-gray-600">Total Profit</p>
+            </div>
+            <div className="ml-auto">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
               </div>
             </div>
@@ -154,10 +176,10 @@ const Finances = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Work</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estimated Value</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Expenses</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variance</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Income</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expenses</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profit</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Margin</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
@@ -167,41 +189,33 @@ const Finances = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">{data.workTitle}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      ${data.estimatedValue.toLocaleString()}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">
+                      ${data.totalIncome.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium">
                       ${data.totalExpenses.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`text-sm font-medium ${
-                        data.variance >= 0 ? 'text-green-600' : 'text-red-600'
+                        data.profit >= 0 ? 'text-green-600' : 'text-red-600'
                       }`}>
-                        ${data.variance.toLocaleString()}
+                        ${data.profit.toLocaleString()}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="text-sm font-medium text-gray-900 mr-2">
-                          {data.completionPercentage.toFixed(1)}%
-                        </div>
-                        <div className="w-16 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className={`h-2 rounded-full ${
-                              data.completionPercentage <= 100 ? 'bg-blue-500' : 'bg-red-500'
-                            }`}
-                            style={{ width: `${Math.min(data.completionPercentage, 100)}%` }}
-                          ></div>
-                        </div>
-                      </div>
+                      <span className={`text-sm font-medium ${
+                        data.profitMargin >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {data.profitMargin.toFixed(1)}%
+                      </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        data.variance >= 0 
+                        data.profit >= 0 
                           ? 'bg-green-100 text-green-800' 
                           : 'bg-red-100 text-red-800'
                       }`}>
-                        {data.variance >= 0 ? 'On Budget' : 'Over Budget'}
+                        {data.profit >= 0 ? 'Profitable' : 'Loss'}
                       </span>
                     </td>
                   </tr>

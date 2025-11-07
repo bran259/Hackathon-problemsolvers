@@ -37,88 +37,81 @@
 1. **Install dependencies**
    ```bash
    npm install
-Start the json-server backend
+   ```
 
-npm run server
+2. **Start the json-server backend**
+   ```bash
+   npm run server
+   ```
+   Server runs at: http://localhost:3001
 
+3. **Start the React development server**
+   ```bash
+   npm start
+   ```
+   Frontend runs at: http://localhost:3000
 
-Server runs at: http://localhost:3001
+4. **Run both simultaneously**
+   ```bash
+   npm run dev
+   ```
 
-Start the React development server
+---
 
-npm start
+## ## 👤 Demo Accounts
 
+| Role | Username | Password |
+|------|----------|----------|
+| Admin | admin | admin123 |
+| Site Agent | agent1 | agent123 |
+| Client | client1 | client123 |
 
-Frontend runs at: http://localhost:3000
+---
 
-Run both simultaneously
+## ### 🔐 Authentication
+- `GET /users`
+- `POST /users`
 
-npm run dev
+### 🏗️ Works Management
+- `GET /works`
+- `GET /works/:id`
+- `POST /works`
+- `PATCH /works/:id`
 
-👤 Demo Accounts
-Role	Username	Password
-Admin	admin	admin123
-Site Agent	agent1	agent123
-Client	client1	client123
-🔌 API Endpoints
-🔐 Authentication
+### 🏥 Site Visits
+- `GET /siteVisits`
+- `POST /siteVisits`
 
-GET /users
+### 🚜 Equipment
+- `GET /equipment`
+- `PATCH /equipment/:id`
 
-POST /users
+### 👷 Labour Logs
+- `GET /labourLogs`
+- `POST /labourLogs`
 
-🏗️ Works Management
+### 💰 Finances
+- `GET /finances`
+- `POST /finances`
 
-GET /works
+### 📅 Timeline
+- `GET /timeline?workId=:id`
+- `POST /timeline`
 
-GET /works/:id
+### 🔔 Notifications
+- `GET /notifications?userId=:id`
+- `POST /notifications`
+- `PATCH /notifications/:id`
 
-POST /works
+---
 
-PATCH /works/:id
+## 📡 Example REST API Calls
 
-##Site Visits
-
-GET /siteVisits
-
-POST /siteVisits
-
-🚜 Equipment
-
-GET /equipment
-
-PATCH /equipment/:id
-
-👷 Labour Logs
-
-GET /labourLogs
-
-POST /labourLogs
-
-💰 Finances
-
-GET /finances
-
-POST /finances
-
-📅 Timeline
-
-GET /timeline?workId=:id
-
-POST /timeline
-
-🔔 Notifications
-
-GET /notifications?userId=:id
-
-POST /notifications
-
-PATCH /notifications/:id
-
-📡 Example REST API Calls
-➕ Create a Work
+### ➕ Create a Work
+```http
 POST http://localhost:3001/works
 Content-Type: application/json
+
 {
   "title": "Foundation Work",
   "description": "Concrete foundation for Building A",
@@ -130,10 +123,13 @@ Content-Type: application/json
   "createdBy": 1,
   "createdAt": "2024-01-10T10:00:00Z"
 }
+```
 
-📝 Record Site Visit
+### 📝 Record Site Visit
+```http
 POST http://localhost:3001/siteVisits
 Content-Type: application/json
+
 {
   "workId": 1,
   "visitDate": "2024-01-16",
@@ -148,10 +144,13 @@ Content-Type: application/json
   "photos": ["photo1.jpg"],
   "createdAt": "2024-01-16T14:30:00Z"
 }
+```
 
-🧱 Log Daily Labour
+### 🧱 Log Daily Labour
+```http
 POST http://localhost:3001/labourLogs
 Content-Type: application/json
+
 {
   "workId": 1,
   "date": "2024-01-16",
@@ -166,124 +165,93 @@ Content-Type: application/json
   "totalCost": 200,
   "createdAt": "2024-01-16T18:00:00Z"
 }
+```
 
-## Acceptance Criteria
-## Core Features
+---
 
- Role-based auth
+## ✅ Acceptance Criteria
 
- Work management
+### Core Features
+- ✅ Role-based auth
+- ✅ Work management
+- ✅ QC site visits
+- ✅ Equipment assignment
+- ✅ Labour logging
+- ✅ Financial tracking
+- ✅ Timeline events
+- ✅ Notifications
+- ✅ Admin panel
 
- QC site visits
+### Technical Requirements
+- ✅ React SPA
+- ✅ json-server backend
+- ✅ Fetch API only
+- ✅ Protected routes
+- ✅ Mock authentication
 
- Equipment assignment
+### Business Logic
+- ✅ Client notifications on events
+- ✅ Auto financial reconciliation
+- ✅ Equipment tracking
+- ✅ Labour → automatic cost entries
+- ✅ Timeline tracking
 
- Labour logging
+---
 
- Financial tracking
+## 🏛️ Architecture
 
- Timeline events
-
- Notifications
-
- Admin panel
-
-✅ Technical Requirements
-
- React SPA
-
- json-server backend
-
- Fetch API only
-
- Protected routes
-
- Mock authentication
-
-## Business Logic
-
- Client notifications on events
-
- Auto financial reconciliation
-
- Equipment tracking
-
- Labour → automatic cost entries
-
- Timeline tracking
-
-🏛️ Architecture
-Frontend Structure
+### Frontend Structure
+```
 src/
 ├── components/
 ├── pages/
 ├── hooks/
 ├── utils/
 └── App.js
+```
 
-Backend Schema
+### Backend Schema
+- `users`
+- `works`
+- `siteVisits`
+- `equipment`
+- `labourLogs`
+- `finances`
+- `timeline`
+- `notifications`
 
-users
+---
 
-works
+## 💰 Financial Reconciliation
+- Estimates vs actuals
+- Category cost breakdown
+- Variance analysis
+- Progress completion calculation
 
-siteVisits
-
-equipment
-
-labourLogs
-
-finances
-
-timeline
-
-notifications
-
-💰 Financial Reconciliation
-
-Estimates vs actuals
-
-Category cost breakdown
-
-Variance analysis
-
-Progress completion calculation
-
-🔔 Notification System
+## 🔔 Notification System
 
 Clients receive alerts for:
+- Work creation
+- Site visit completion
+- Equipment assignments
+- Financial updates
+- Timeline events
+- Labour activity
 
-Work creation
+## 🔒 Security Notes
 
-Site visit completion
+**This is a demo system with:**
+- Simple passwords
+- No encryption
+- Client-side only security
 
-Equipment assignments
+**For production:**
+- Use JWT
+- Add hashing
+- Server-side protection
+- Validation + sanitization
 
-Financial updates
-
-Timeline events
-
-Labour activity
-
-🔒 Security Notes
-
-This is a demo system with:
-
-Simple passwords
-
-No encryption
-
-Client-side only security
-
-For production:
-
-Use JWT
-
-Add hashing
-
-Server-side protection
-
-Validation + sanitization
+---
 
 
 © Copyright
