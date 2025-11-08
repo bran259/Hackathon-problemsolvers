@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './hooks/useAuth'
 import { NotificationProvider } from './hooks/useNotifications'
 import Layout from './components/Layout'
@@ -17,6 +17,7 @@ function App() {
   return (
     <AuthProvider>
       <NotificationProvider>
+        
         <Router>
           <div className="App">
             <Routes>
@@ -40,6 +41,7 @@ function App() {
         </Router>
       </NotificationProvider>
     </AuthProvider>
+    
   );
 }
 

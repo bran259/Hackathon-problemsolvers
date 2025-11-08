@@ -19,11 +19,11 @@ const Login = () => {
     setError('');
 
     const result = await login(username, password);
-    
+
     if (!result.success) {
       setError(result.error);
     }
-    
+
     setLoading(false);
   };
 
@@ -35,38 +35,42 @@ const Login = () => {
             <h2 className="text-3xl font-bold text-gray-800">Construction Site Manager</h2>
             <p className="text-gray-600 mt-2">Please sign in to continue</p>
           </div>
-          
+
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
-          
+
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
               <input
                 type="text"
+                name="username"
+                autoComplete="username"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <input
                 type="password"
+                name="password"
+                autoComplete="current-password"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading}
             >
@@ -80,7 +84,7 @@ const Login = () => {
               )}
             </button>
           </div>
-          
+
           <div className="mt-8 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm font-medium text-gray-700 mb-2">Demo Accounts:</p>
             <div className="text-xs text-gray-600 space-y-1">
