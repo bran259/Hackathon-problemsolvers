@@ -19,7 +19,7 @@ export const NotificationProvider = ({ children }) => {
     if (!user) return;
     
     try {
-      const response = await fetch(`http://localhost:3001/notifications?userId=${user.id}&_sort=createdAt&_order=desc`);
+      const response = await fetch(`https://site-construction-backend.vercel.app/notifications?userId=${user.id}&_sort=createdAt&_order=desc`);
       const data = await response.json();
       setNotifications(data);
     } catch (error) {
@@ -38,7 +38,7 @@ export const NotificationProvider = ({ children }) => {
         createdAt: new Date().toISOString()
       };
 
-      const response = await fetch('http://localhost:3001/notifications', {
+      const response = await fetch('https://site-construction-backend.vercel.app/notifications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(notification)
@@ -54,7 +54,7 @@ export const NotificationProvider = ({ children }) => {
 
   const markAsRead = async (notificationId) => {
     try {
-      await fetch(`http://localhost:3001/notifications/${notificationId}`, {
+      await fetch(`https://site-construction-backend.vercel.app/notifications/${notificationId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ read: true })

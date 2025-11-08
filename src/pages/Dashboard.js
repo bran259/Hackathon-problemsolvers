@@ -26,7 +26,7 @@ const Dashboard = () => {
         api.getWorks(),
         api.getFinances(),
         api.getEquipment(),
-        fetch('http://localhost:3001/timeline?_sort=createdAt&_order=desc&_limit=5').then(r => r.json())
+        fetch('https://site-construction-backend.vercel.app/timeline?_sort=createdAt&_order=desc&_limit=5').then(r => r.json())
       ]);
 
       setStats({
