@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await fetch('http://localhost:3001/users');
+      const response = await fetch('https://site-construction-backend.vercel.app/users');
       const users = await response.json();
       
       const foundUser = users.find(u => u.username === username && u.password === password);
